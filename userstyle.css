@@ -1,0 +1,219 @@
+/*****************************************************************************
+ * Styling for Dark Theme                                                    *
+ *                                                                           *
+ * Rendered Markdown                                                         *
+ * Application styling is defined in `userchrome.css`                        *
+ *****************************************************************************/
+
+ :root {
+	--font-size:                     16px;
+	--mark-bgcolor:                  #BBDD66;                    /* greenish */
+	--search-result-bgcolor:         #F3B717;                       /* amber */
+	--current-search-result-bgcolor: #CF3F00;                         /* red */
+	--preformatted-text-bgcolor:     #282c34;                    /* darkgray */
+	--heading-bgcolor:               #444444;                        /*标题背景色（灰色） gray */
+	--heading-print-bgcolor:         #a1eb76;                   /* lightgray */
+}
+
+/*------ Change the font size to 13px ---------------------------------------*/
+body, th, td, p.inline-code {
+	font-size: var(--font-size);
+}
+/*---------------------------------------------------------------------------*/
+
+/*------ Better inline code size --------------------------------------------*/
+/* 内联代码与普通文本大小一致 */
+.inline-code {
+	font-size: 1em;
+}
+/*---------------------------------------------------------------------------*/
+
+/*------ Colors for different mark tags -------------------------------------*/
+/* ==mark== */
+mark {
+	background-color: var(--mark-bgcolor);
+	padding:          1px 2px;
+}
+/* occurrences of search term */
+mark[data-markjs] {
+	background-color: var(--search-result-bgcolor);
+	padding:          0;
+}
+/* current search term (local search) */
+mark[data-markjs].mark-selected {
+	background-color: var(--current-search-result-bgcolor);
+}
+/*---------------------------------------------------------------------------*/
+
+/*------ align checkbox to the first line (baseline) ------------------------*/
+li.md-checkbox .checkbox-wrapper {
+	align-items: baseline;
+}
+/*---------------------------------------------------------------------------*/
+
+/*------ Add background and padding to preformatted text --------------------*/
+pre {
+	padding:    0.5em;
+	background: var(--preformatted-text-bgcolor);
+}
+/*---------------------------------------------------------------------------*/
+
+/*------ Headings: change background and padding ----------------------------*/
+h1, h2, h3, h4, h5, h6 {
+	background-color: var(--heading-bgcolor);
+	padding-bottom:   .1em;
+	padding-top:      .2em;
+	padding-left:     .4em;
+	border-bottom:    unset;
+}
+/*---------------------------------------------------------------------------*/
+
+/*------ Headings: Use nested counters --------------------------------------*/
+body { counter-reset: h1counter; }
+h1 { counter-reset: h2counter; }
+h2 { counter-reset: h3counter; }
+h3 { counter-reset: h4counter; }
+h4 { counter-reset: h5counter; }
+h5 { counter-reset: h6counter; }
+h6 {}
+
+h1:before {
+	counter-increment: h1counter;
+	content: counter(h1counter) "\0000a0\0000a0";
+}
+
+h2:before {
+	counter-increment: h2counter;
+	content: counter(h1counter) "." counter(h2counter) "\0000a0\0000a0";
+}
+
+h3:before {
+	counter-increment: h3counter;
+	content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) "\0000a0\0000a0";
+}
+
+h4:before {
+	counter-increment: h4counter;
+	content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) "." counter(h4counter) "\0000a0\0000a0";
+}
+
+h5:before {
+	counter-increment: h5counter;
+	content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "\0000a0\0000a0";
+}
+
+h6:before {
+	counter-increment: h6counter;
+	content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) "\0000a0\0000a0";
+}
+/*---------------------------------------------------------------------------*/
+
+/*------ TOC: Use nested counters for list items ----------------------------*/
+.table-of-contents ol {
+	counter-reset: list-item;
+}
+.table-of-contents li {
+	display: block; counter-increment: list-item;
+}
+.table-of-contents li:before {
+	content: counters(list-item,'.') '.\0000a0';
+}
+/*---------------------------------------------------------------------------*/
+
+/*------ TOC: Make TOC a fixed height and scrollable ------------------------*/
+/*
+.table-of-contents {
+	overflow-y: auto;
+	height: 18em;
+}
+*/
+/*---------------------------------------------------------------------------*/
+
+/*------ TOC: Sidebar (move mouse to right edge) ----------------------------*/
+@media not print {
+
+	nav.table-of-contents ul {
+		list-style-type: none;
+		margin-top: 0px;
+		margin-bottom: 0px;
+	}
+
+	nav.table-of-contents>ul {
+		top: 5px;
+		right: 0px;
+		z-index: 99;
+
+		font-size: 12px;
+		position: fixed;
+		padding: 15px;
+
+		border-radius: 10px 0px 0px 10px;
+		margin: 0px;
+
+		overflow: hidden;
+		height: 90%;
+		width: 5px;
+		transition: .2s;
+	}
+
+	nav.table-of-contents::after {
+		content: "[TOC - move your cursor to the right edge]";
+		color: #dddddd;
+	}
+
+	nav.table-of-contents>ul:hover {
+		background: #444444;
+		box-shadow: -5px 0px 10px 0px rgba(211,211,211,0.75);
+
+		width: 40%;
+		color: none;
+		overflow: scroll;
+	}
+
+	nav.table-of-contents>ul:hover::before {
+		content: "TABLE OF CONTENTS";
+	}
+
+	nav.table-of-contents>ul:hover li {
+		display: list-item;
+	}
+
+	nav.table-of-contents li {
+		display: none;
+		white-space: nowrap;
+		overflow: hidden;
+		margin: 0px;
+		padding: 0px;
+	}
+
+	nav.table-of-contents a {
+		text-decoration: none !important;
+	}
+
+}
+/* 定义字体 */
+@font-face {
+	font-family: 'LXGWWenKaiMono-Light';
+	src: url('file:///C:/Users/27869/.config/joplin-desktop/font/LXGWWenKaiMono-Light.ttf'); /* 修改为你的字体路径 */
+}
+
+/* 覆盖编辑器字体 */
+.CodeMirror-code {
+	font-family: 'LXGWWenKaiMono-Light', sans-serif !important;
+  }
+  
+  /* 覆盖预览界面字体 */
+  .note-preview {
+	font-family: 'LXGWWenKaiMono-Light', sans-serif !important;
+  }
+  
+  /* 覆盖界面全局字体（可选） */
+  body {
+	font-family: 'LXGWWenKaiMono-Light', sans-serif !important;
+  }
+
+  /* 测试字体 + 背景色 */
+/* .CodeMirror-code {
+	font-family: 'Arial', sans-serif !important;
+	background-color: yellow !important;
+  } */
